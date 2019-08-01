@@ -513,6 +513,14 @@ class NetSuite:
     def add(self, record: Dict) -> CompoundValue:
         """Insert a single record."""
         return self.request('add', record=record)
+    
+    @WebServiceCall(
+        'body.writeResponse',
+        extract=lambda resp: resp['baseRef'],
+    )
+    def update(self, record: CompoundValue) -> CompoundValue:
+        """Insert a single record."""
+        return self.request('update', record=record)
 
     @WebServiceCall(
         'body.writeResponse',
