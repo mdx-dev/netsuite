@@ -506,6 +506,15 @@ class NetSuite:
         return srch
 
     @WebServiceCall(
+        'body.searchResult',
+        extract=lambda resp: resp if resp['status']['isSuccess'] else resp['status']['statusDetail']
+    )
+    def searchMoreWithId(self, searchId, pageIndex) -> List[CompoundValue]:
+        """Search records"""
+        srch = self.request('searchMoreWithId', searchId, pageIndex)
+        return srch
+
+    @WebServiceCall(
         'body.writeResponse',
         extract=lambda resp:
             resp['baseRef'] if resp['status']['isSuccess'] else resp['status']['statusDetail'],
